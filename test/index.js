@@ -1,10 +1,11 @@
-const tap = require("tap");
+const tape = require("tape");
 
-const {JSDOM} = require("jsdom");
-const {register} = require("./index");
+const {register} = require("../index");
 
 // setup dom
 function setup() {
+    const {JSDOM} = require("jsdom");
+
     const dom = new JSDOM(/*html*/`
     <!doctype html>
     <html>
@@ -24,8 +25,8 @@ function setup() {
 }
 
 
-tap.test("jquery-tools", t => {
-    setup();
+tape.test("jquery-tools", t => {
+    if (global.window === undefined) setup();
 
     t.test("$.fn.toggleText()", t2 => {
         $("#root").toggleText("a", "b");

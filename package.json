@@ -2,18 +2,20 @@
   "name": "@hamgom95/jquery-tools",
   "version": "0.1.0",
   "description": "jquery plugin",
-  "main": "src/index.js",
+  "main": "index.js",
   "keywords": [
     "jquery",
     "plugin"
   ],
   "repository": "hamgom95/jquery-tools",
   "scripts": {
-    "test": "tap src/**/*.spec.js",
-    "build:bundle": "rollup -c",
-    "build:doc": "jsdoc src/*",
-    "build:readme": "jsdoc2md --heading-depth=4 --template README.tpl.md src/* > README.md",
-    "prepare": "npm run build:bundle && npm run build:doc && npm run build:readme",
+    "test": "tape test/**/*.js",
+    "build:bundle": "node build.js",
+    "build:test": "node build.js test",
+    "build:doc": "jsdoc index.js",
+    "build:readme": "jsdoc2md --heading-depth=4 --template README.tpl.md index.js > README.md",
+    "build": "npm run build:bundle && npm run build:test && npm run build:doc && npm run build:readme",
+    "prepare": "npm run build:bundle",
     "prepublishOnly": "npm run build:readme"
   },
   "author": {
@@ -27,11 +29,13 @@
     "jsdom": "^13.2.0",
     "rollup": "^1.6.0",
     "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-ignore": "^1.0.5",
+    "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-terser": "^4.0.4",
-    "tap": "^12.5.3"
+    "tape": "^4.10.1"
   },
   "files": [
-    "/src"
+    "index.js"
   ],
   "license": "ISC",
   "peerDependencies": {
