@@ -1,32 +1,8 @@
-const tape = require("tape");
-
 const {register} = require("../index");
 
-// setup dom
-function setup() {
-    const {JSDOM} = require("jsdom");
-
-    const dom = new JSDOM(/*html*/`
-    <!doctype html>
-    <html>
-    <body>
-        <div id="root"></div>
-    </body>
-    </html>`, { pretendToBeVisual: true });
-
-    // Needed before requiring jquery
-    global.document = dom.window.document;
-    global.window = dom.window;
-
-    global.$ = require("jquery");
-
-    // register jquery plugin
-    register(global.$);
-}
-
-
-tape.test("jquery-tools", t => {
-    if (global.window === undefined) setup();
+exports.test = ($, t) => {
+    // add plugin
+    register($);
 
     t.test("$.fn.toggleText()", t2 => {
         $("#root").toggleText("a", "b");
@@ -65,4 +41,8 @@ tape.test("jquery-tools", t => {
     });
 
     t.end();
-});
+};
+
+
+
+

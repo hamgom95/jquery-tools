@@ -9,9 +9,10 @@
   ],
   "repository": "hamgom95/jquery-tools",
   "scripts": {
-    "test": "tape test/**/*.js",
+    "test:node": "tape test/node.js",
+    "test:browser": "browserify test/browser.js | testling",
     "build:bundle": "node build.js",
-    "build:test": "node build.js test",
+    "build:test": "browserify test/browser.js > dist/test.js",
     "build:doc": "jsdoc index.js",
     "build:readme": "jsdoc2md --heading-depth=4 --template README.tpl.md index.js > README.md",
     "build": "npm run build:bundle && npm run build:test && npm run build:doc && npm run build:readme",
@@ -23,6 +24,7 @@
     "email": "hamgom95@gmail.com"
   },
   "devDependencies": {
+    "browserify": "^16.2.3",
     "jquery": "^3.3.1",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",

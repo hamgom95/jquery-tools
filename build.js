@@ -1,6 +1,5 @@
 const pkg = require("./package.json");
 
-const process = require('process');
 const {rollup} = require('rollup');
 const commonjs = require('rollup-plugin-commonjs');
 const {terser} = require("rollup-plugin-terser");
@@ -21,20 +20,6 @@ const banner = `/*!
  */
 `;
 
-async function buildTest() {
-    const bundle = await rollup({
-        input: 'test/index.js',
-        plugins: [
-            commonjs(),
-        ],
-    });
-
-    bundle.write({
-        file: `${buildDir}/test.esm.js`,
-        format: 'esm',
-    });
-}
-
 async function build() {
 
     for (const min of [true, false]) {
@@ -53,6 +38,7 @@ async function build() {
             bundle.write({
                 file: `${buildDir}/${packageName}.${format}${min && ".min" || ""}.js`,
                 format,
+                banner,
                 name: globalName,
                 sourcemap: true,
                 name: globalName,
@@ -62,8 +48,4 @@ async function build() {
     }
 }
 
-if (process.argv[2] === "test") {
-    buildTest();
-} else {
-    build();
-}
+build();
